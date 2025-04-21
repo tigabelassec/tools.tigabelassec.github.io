@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CORS Test Exploit</title>
+    <meta
+      name="description"
+      content="A platform offering various tools to assist in web application security testing, vulnerability detection, and efficient cybersecurity exploration."
+    />
+    <meta
+      name="keywords"
+      content="web security tools, application security testing, vulnerability detection, ethical hacking, cybersecurity tools, penetration testing, bug bounty toolkit"
+    />
+    <meta name="author" content="13Sec" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="shortcut icon"
+      href="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/favicon.ico"
+      type="image/x-icon"
+    />
+    <meta property="og:title" content="13Sec Tools" />
+    <meta
+      property="og:description"
+      content="A platform offering various tools to assist in web application security testing, vulnerability detection, and efficient cybersecurity exploration."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tools.tigabelassec.my.id" />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <meta property="og:site_name" content="13Sec Tools" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="13Sec Tools" />
+    <meta
+      name="twitter:description"
+      content="A platform offering various tools to assist in web application security testing, vulnerability detection, and efficient cybersecurity exploration."
+    />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900 text-white min-h-screen flex flex-col">
+    <div class="fixed top-4 left-4 z-50">
+      <button
+        onclick="history.back()"
+        class="text-teal-400 hover:text-teal-300 text-sm font-medium"
+      >
+        ← Back
+      </button>
+    </div>
+
+    <main class="flex-grow flex justify-center items-center px-4 pt-20 pb-32">
+      <div
+        class="border border-gray-700 bg-gray-800 p-8 rounded-xl shadow-xl w-full max-w-xl text-center"
+      >
+        <h3 class="text-2xl font-semibold text-white mb-6">
+          CORS Test Exploit
+        </h3>
+        <input
+          type="text"
+          name="target"
+          placeholder="Target URL"
+          autocomplete="off"
+          class="w-4/5 px-4 py-2 rounded-md bg-gray-700 border border-gray-600 text-white focus:outline-none mb-4"
+        />
+        <button
+          onclick="submit()"
+          class="px-5 py-2 rounded-md bg-teal-600 hover:bg-teal-700 text-white font-semibold transition"
+        >
+          Exploit Now!
+        </button>
+
+        <div id="messageBox" class="mt-4 text-sm font-medium hidden"></div>
+
+        <iframe
+          id="corsResult"
+          class="w-full h-64 mt-6 rounded-md bg-[#2c3e50] hidden"
+        ></iframe>
+
+        <button
+          id="copyBtn"
+          onclick="copyResult()"
+          class="copy-btn mt-4 px-5 py-2 rounded-md bg-teal-600 hover:bg-teal-700 text-white font-semibold hidden"
+        >
+          Copy Result
+        </button>
+      </div>
+    </main>
+
+    <footer
+      class="bg-gray-900 text-sm text-gray-500 border-t border-gray-700 text-center py-4 w-full"
+    >
+      © 2025
+      <a href="/" target="_blank" class="text-teal-400 hover:text-teal-500"
+        >13Sec Tools</a
+      >
+      | Crafted with ❤️ for the security community.
+    </footer>
+
+    <script>
+      function isValidURL(string) {
+        try {
+          new URL(string);
+          return true;
+        } catch (_) {
+          return false;
+        }
+      }
+
+      function submit() {
+        const url = document.getElementsByName("target")[0].value.trim();
+        const iframe = document.getElementById("corsResult");
+        const copyBtn = document.getElementById("copyBtn");
+        const msgBox = document.getElementById("messageBox");
+
+        iframe.classList.add("hidden");
+        copyBtn.classList.add("hidden");
+        msgBox.classList.add("hidden");
+        msgBox.textContent = "";
+        msgBox.className = "mt-4 text-sm font-medium hidden";
+
+        if (!url) {
+          showMessage(
+            "Please enter a target URL, e.g., https://example.com/path/path",
+            "red"
+          );
+          return;
+        }
+
+        if (!isValidURL(url)) {
+          showMessage("Invalid URL format.", "red");
+          return;
+        }
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState === 4) {
+            iframe.classList.remove("hidden");
+            iframe.srcdoc =
+              this.status === 200
+                ? "<pre style='color: white;'>Response (Status: <b style='color: #4ade80;'>VULN</b> | status code: <span style='color: #4ade80;'>" +
+                  this.status +
+                  "</span>):<br><br>" +
+                  this.responseText +
+                  "</pre>"
+                : "<pre style='color: white;'>Response (Status: <b style='color: #f87171;'>Not Vulnerable</b> | status code: <span style='color: #f87171;'>" +
+                  this.status +
+                  "</span>):<br><br>" +
+                  this.responseText +
+                  "</pre>";
+
+            copyBtn.classList.remove("hidden");
+
+            if (this.status === 200) {
+              showMessage("CORS vulnerability detected on: " + url, "green");
+            } else {
+              showMessage("CORS test failed or not vulnerable: " + url, "red");
+            }
+          }
+        };
+        xhttp.open("GET", url, true);
+        xhttp.withCredentials = true;
+        xhttp.send();
+      }
+
+      function showMessage(msg, color) {
+        const box = document.getElementById("messageBox");
+        box.textContent = msg;
+        box.classList.remove("hidden");
+
+        if (color === "green") {
+          box.classList.add("text-green-400");
+        } else {
+          box.classList.add("text-red-400");
+        }
+      }
+
+      function copyResult() {
+        const iframe = document.getElementById("corsResult");
+        const content = iframe.contentWindow.document.body.innerText;
+        const msgBox = document.getElementById("messageBox");
+
+        navigator.clipboard.writeText(content).then(
+          () => {
+            showMessage("Result copied to clipboard!", "green");
+          },
+          () => {
+            showMessage("Failed to copy result.", "red");
+          }
+        );
+      }
+    </script>
+  </body>
+</html>

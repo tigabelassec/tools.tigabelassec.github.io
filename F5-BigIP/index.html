@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>F5 Big-IP Cookie Encoder & Decoder</title>
+    <meta
+      name="description"
+      content="A platform offering various tools to assist in web application security testing, vulnerability detection, and efficient cybersecurity exploration."
+    />
+    <meta
+      name="keywords"
+      content="web security tools, application security testing, vulnerability detection, ethical hacking, cybersecurity tools, penetration testing, bug bounty toolkit"
+    />
+    <meta name="author" content="13Sec" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="shortcut icon"
+      href="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/favicon.ico"
+      type="image/x-icon"
+    />
+    <meta property="og:title" content="13Sec Tools" />
+    <meta
+      property="og:description"
+      content="A platform offering various tools to assist in web application security testing, vulnerability detection, and efficient cybersecurity exploration."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tools.tigabelassec.my.id" />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <meta property="og:site_name" content="13Sec Tools" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="13Sec Tools" />
+    <meta
+      name="twitter:description"
+      content="A platform offering various tools to assist in web application security testing, vulnerability detection, and efficient cybersecurity exploration."
+    />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col font-sans bg-gray-900 text-white">
+    <div class="fixed top-4 left-4 z-50">
+      <button
+        onclick="history.back()"
+        class="inline-flex items-center text-sm font-medium text-teal-400 hover:text-teal-300 transition"
+      >
+        ← Back
+      </button>
+    </div>
+
+    <div class="flex-grow flex items-center justify-center p-4 pt-24 md:pt-4">
+      <div class="w-full max-w-screen-sm">
+        <div class="border border-gray-700 p-6 rounded-lg bg-gray-800">
+          <h1 class="text-2xl font-bold text-center mb-4">
+            F5 Big-IP Cookie Encoder & Decoder
+            <img
+              src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f9/F5_Networks_logo.svg/1200px-F5_Networks_logo.svg.png"
+              alt="F5 Logo"
+              width="28"
+              class="inline"
+            />
+          </h1>
+          <label for="inputText" class="font-semibold block mb-2">
+            Enter Cookie or IP:Port
+          </label>
+          <input
+            type="text"
+            id="inputText"
+            placeholder="Example: BIGipServerPOOL=12345678.5678.0000 or 192.168.1.1:443"
+            class="p-3 mb-4 w-full rounded bg-gray-700 border border-gray-600 text-white"
+          />
+
+          <label for="poolName" class="font-semibold block mb-2">
+            Pool Name (Encode):
+          </label>
+          <input
+            type="text"
+            id="poolName"
+            placeholder="Example: 13Sec"
+            class="p-3 mb-4 w-full rounded bg-gray-700 border border-gray-600 text-white"
+          />
+
+          <button
+            onclick="autoDetect()"
+            class="p-3 bg-teal-600 hover:bg-teal-700 text-white w-full rounded"
+          >
+            🔍 Auto Detect & Process
+          </button>
+
+          <div
+            id="result"
+            class="mt-4 bg-gray-900 p-4 rounded font-mono break-words hidden"
+          >
+            <div id="outputText"></div>
+            <button
+              class="mt-3 bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded text-sm"
+              onclick="copyResult()"
+            >
+              📋 Copy
+            </button>
+            <div id="copyMessage" class="mt-2 text-sm text-green-400 hidden">
+              ✅ Copied to clipboard!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer
+      class="bg-gray-900 text-center text-sm text-gray-500 py-4 mt-10 border-t border-gray-700"
+    >
+      © 2025
+      <a href="/" class="text-teal-400 hover:text-teal-500" target="_blank"
+        >13Sec Tools</a
+      >
+      | Crafted with ❤️ for the security community.
+    </footer>
+
+    <script>
+      function autoDetect() {
+        const input = document.getElementById("inputText").value.trim();
+        const pool = document.getElementById("poolName").value.trim();
+        const resultDiv = document.getElementById("result");
+        const outputDiv = document.getElementById("outputText");
+
+        if (!input) {
+          outputDiv.innerHTML = "❌ Input is empty.";
+          resultDiv.classList.remove("hidden");
+          return;
+        }
+
+        if (input.includes("=") && input.includes(".")) {
+          if (pool) {
+            outputDiv.innerHTML =
+              "❌ Please remove the Pool Name input for decoding.";
+          } else {
+            const decoded = decodeCookie(input);
+            outputDiv.innerHTML = decoded;
+          }
+        } else if (input.includes(":")) {
+          if (!pool) {
+            outputDiv.innerHTML = "❌ Please enter Pool Name for encoding.";
+          } else {
+            const encoded = encodeCookie(input, pool);
+            outputDiv.innerHTML = encoded;
+          }
+        } else {
+          outputDiv.innerHTML =
+            "❌ Unrecognized format. Use IP:Port or Cookie.";
+        }
+
+        resultDiv.classList.remove("hidden");
+      }
+
+      function encodeCookie(ipPort, pool) {
+        try {
+          const [ip, portStr] = ipPort.split(":");
+          const port = parseInt(portStr);
+          const ipParts = ip.split(".").map(Number);
+          if (ipParts.length !== 4 || ipParts.some((x) => x < 0 || x > 255)) {
+            return "❌ Invalid IP address.";
+          }
+
+          const ipBuffer = new Uint8Array(ipParts).buffer;
+          const ipUint32 = new Uint32Array(ipBuffer)[0];
+
+          const portBuffer = new Uint16Array([port]).buffer;
+          const portUint16 = new Uint16Array(portBuffer)[0];
+
+          const cookie = `BIGipServer${pool}=${ipUint32}.${portUint16}.0000`;
+          return `✅ Encoded Cookie:<br><code>${cookie}</code>`;
+        } catch (e) {
+          return "❌ Failed to encode.";
+        }
+      }
+
+      function decodeCookie(cookieStr) {
+        try {
+          const [name, value] = cookieStr.split("=");
+          const [host, port] = value.split(".");
+          const poolMatch = /^BIGipServer([.\w]*)/.exec(name);
+          const ipBytes = new Uint8Array(
+            new Uint32Array([parseInt(host)]).buffer
+          );
+          const ip = Array.from(ipBytes).join(".");
+
+          const portBytes = new Uint8Array(
+            new Uint16Array([parseInt(port)]).buffer
+          );
+          const portHex =
+            "0x" +
+            portBytes[0].toString(16).padStart(2, "0") +
+            portBytes[1].toString(16).padStart(2, "0");
+          const decodedPort = parseInt(portHex, 16);
+
+          return `✅ Pool: <b>${
+            poolMatch ? poolMatch[1] : "N/A"
+          }</b><br>IP: <b>${ip}</b><br>Port: <b>${decodedPort}</b>`;
+        } catch (e) {
+          return "❌ Failed to decode.";
+        }
+      }
+
+      function copyResult() {
+        const text = document.getElementById("outputText").innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          showMessage();
+        });
+      }
+
+      function showMessage() {
+        const msg = document.getElementById("copyMessage");
+        msg.classList.remove("hidden");
+        setTimeout(() => {
+          msg.classList.add("hidden");
+        }, 2500);
+      }
+    </script>
+  </body>
+</html>

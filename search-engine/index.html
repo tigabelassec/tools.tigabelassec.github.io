@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-gray-900 text-gray-100">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bug Bounty Search Engine</title>
+    <meta
+      name="description"
+      content="A platform offering various tools to assist in web application security testing, vulnerability detection, and efficient cybersecurity exploration."
+    />
+    <meta
+      name="keywords"
+      content="web security tools, application security testing, vulnerability detection, ethical hacking, cybersecurity tools, penetration testing, bug bounty toolkit"
+    />
+    <meta name="author" content="13Sec" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="shortcut icon"
+      href="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/favicon.ico"
+      type="image/x-icon"
+    />
+    <meta property="og:title" content="13Sec Tools" />
+    <meta
+      property="og:description"
+      content="A platform offering various tools to assist in web application security testing, vulnerability detection, and efficient cybersecurity exploration."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tools.tigabelassec.my.id" />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <meta property="og:site_name" content="13Sec Tools" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="13Sec Tools" />
+    <meta
+      name="twitter:description"
+      content="A platform offering various tools to assist in web application security testing, vulnerability detection, and efficient cybersecurity exploration."
+    />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body class="min-h-screen flex flex-col font-sans">
+    <main class="flex-grow flex flex-col items-center px-4 pt-16 pb-8">
+      <header class="mb-6">
+        <h1 class="text-3xl font-bold text-white text-center">
+          Search Engine For Bug Bounty Hunters
+        </h1>
+      </header>
+      <div class="flex flex-col items-center justify-center">
+        <div class="form-container mb-4 w-full max-w-xl">
+          <label
+            for="target"
+            class="form-label text-white text-lg font-semibold block text-center mb-2 whitespace-nowrap"
+          >
+            Enter Target Domain:
+          </label>
+          <input
+            type="text"
+            id="target"
+            placeholder="example.com"
+            class="form-input w-full px-4 py-2 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-teal-500"
+          />
+        </div>
+      </div>
+      <div id="error-message" class="text-red-500 text-base mb-4 hidden"></div>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl w-full px-4"
+      >
+        <button
+          onclick="googleSearch(1)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Directory listing vulnerabilities
+        </button>
+        <button
+          onclick="googleSearch(2)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Exposed Configuration files
+        </button>
+        <button
+          onclick="googleSearch(3)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Exposed Database files
+        </button>
+        <button
+          onclick="googleSearch(4)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Exposed log files
+        </button>
+        <button
+          onclick="googleSearch(5)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Backup and old files
+        </button>
+        <button
+          onclick="googleSearch(6)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Login pages
+        </button>
+        <button
+          onclick="googleSearch(7)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          SQL errors
+        </button>
+        <button
+          onclick="googleSearch(8)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Publicly exposed documents
+        </button>
+        <button
+          onclick="googleSearch(9)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          phpinfo()
+        </button>
+        <button
+          onclick="googleSearch(10)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Find WordPress
+        </button>
+        <button
+          onclick="googleSearch(11)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Finding Backdoors
+        </button>
+        <button
+          onclick="googleSearch(12)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Install / Setup files
+        </button>
+        <button
+          onclick="googleSearch(13)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Open Redirects
+        </button>
+        <button
+          onclick="googleSearch(14)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Apache STRUTS RCE
+        </button>
+        <button
+          onclick="googleSearch(15)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Find Pastebin entries
+        </button>
+        <button
+          onclick="googleSearch(16)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Employees on LINKEDIN
+        </button>
+        <button
+          onclick="googleSearch(17)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          .htaccess sensitive files
+        </button>
+        <button
+          onclick="googleSearch(18)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Find Subdomains
+        </button>
+        <button
+          onclick="googleSearch(19)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Find Sub-Subdomains
+        </button>
+        <button
+          onclick="googleSearch(20)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Find WordPress #2
+        </button>
+        <button
+          onclick="googleSearch(21)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Search in GITHUB
+        </button>
+        <button
+          onclick="googleSearch(22)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Test CrossDomain
+        </button>
+        <button
+          onclick="googleSearch(23)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Check in ThreatCrowd
+        </button>
+        <button
+          onclick="googleSearch(24)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Find SWF
+        </button>
+        <button
+          onclick="googleSearch(25)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Find MIME-SWF
+        </button>
+        <button
+          onclick="googleSearch(26)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Find SWF links in the past
+        </button>
+        <button
+          onclick="googleSearch(27)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Find MIME-SWF links in the past
+        </button>
+        <button
+          onclick="googleSearch(28)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Search in Web Archive #1
+        </button>
+        <button
+          onclick="googleSearch(29)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Search in Web Archive #2
+        </button>
+        <button
+          onclick="googleSearch(30)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Certificate Transparency
+        </button>
+        <button
+          onclick="googleSearch(31)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Search OpenBugBounty
+        </button>
+        <button
+          onclick="googleSearch(32)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Search in Reddit
+        </button>
+        <button
+          onclick="googleSearch(33)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Search WP Config Backup
+        </button>
+        <button
+          onclick="googleSearch(34)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Search in Censys (IPv4)
+        </button>
+        <button
+          onclick="googleSearch(35)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Search in Censys (Domain)
+        </button>
+        <button
+          onclick="googleSearch(36)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Search in Censys (Certificates)
+        </button>
+        <button
+          onclick="googleSearch(37)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Search in SHODAN
+        </button>
+        <button
+          onclick="googleSearch(38)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Vulnerable Servers
+        </button>
+        <button
+          onclick="googleSearch(39)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          ArcGIS REST Services Directory
+        </button>
+        <button
+          onclick="googleSearch(40)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          wp-content Juicy Info
+        </button>
+        <button
+          onclick="googleSearch(41)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          main.yml file
+        </button>
+        <button
+          onclick="googleSearch(42)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Admin Portal
+        </button>
+        <button
+          onclick="googleSearch(43)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Wordpress Juicy file 1
+        </button>
+        <button
+          onclick="googleSearch(44)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          File Upload
+        </button>
+        <button
+          onclick="googleSearch(45)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Vulnerable Wordpress Plugin
+        </button>
+        <button
+          onclick="googleSearch(46)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Sensitive File
+        </button>
+        <button
+          onclick="googleSearch(47)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Sharing API Info
+        </button>
+        <button
+          onclick="googleSearch(48)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Sensitive Admin Backup
+        </button>
+        <button
+          onclick="googleSearch(49)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Github API
+        </button>
+        <button
+          onclick="googleSearch(50)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Wordpress Juicy file 2
+        </button>
+        <button
+          onclick="googleSearch(51)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Drupal Login
+        </button>
+        <button
+          onclick="googleSearch(52)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Joomla Database/
+        </button>
+        <button
+          onclick="googleSearch(53)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Sql File
+        </button>
+        <button
+          onclick="googleSearch(54)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Wordpress Juicy file 3
+        </button>
+        <button
+          onclick="googleSearch(55)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Remote procedure call protocol
+        </button>
+        <button
+          onclick="googleSearch(56)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Sensitive File
+        </button>
+        <button
+          onclick="googleSearch(57)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          jwks-rsa file
+        </button>
+        <button
+          onclick="googleSearch(58)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Wordpress Backup
+        </button>
+        <button
+          onclick="googleSearch(59)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Mysql file
+        </button>
+        <button
+          onclick="googleSearch(60)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Sensitive File
+        </button>
+        <button
+          onclick="googleSearch(61)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Docker-Compose yml file
+        </button>
+        <button
+          onclick="googleSearch(62)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Sensitive File
+        </button>
+        <button
+          onclick="googleSearch(63)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Sensitive File
+        </button>
+        <button
+          onclick="googleSearch(64)"
+          class="button bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg font-semibold"
+        >
+          Directories containing SQL Installs and/or SQL databases
+        </button>
+      </div>
+    </main>
+    <div class="fixed top-4 left-4 z-50">
+      <button
+        onclick="history.back()"
+        class="text-teal-400 hover:text-teal-300 text-sm font-medium"
+      >
+        ← Back
+      </button>
+    </div>
+
+    <footer
+      class="bg-gray-900 text-center py-4 text-sm text-gray-500 border-t border-gray-700"
+    >
+      © 2025
+      <a href="/" class="text-teal-400 hover:text-teal-500" target="_blank"
+        >13Sec Tools</a
+      >
+      | Crafted with ❤️ for the security community.
+    </footer>
+  </body>
+</html>

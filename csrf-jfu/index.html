@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSRF jQuery File Upload</title>
+    <meta
+      name="description"
+      content="A platform offering various tools to assist in web application security testing, vulnerability detection, and efficient cybersecurity exploration."
+    />
+    <meta
+      name="keywords"
+      content="web security tools, application security testing, vulnerability detection, ethical hacking, cybersecurity tools, penetration testing, bug bounty toolkit"
+    />
+    <meta name="author" content="13Sec" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="shortcut icon"
+      href="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/favicon.ico"
+      type="image/x-icon"
+    />
+    <meta property="og:title" content="13Sec Tools" />
+    <meta
+      property="og:description"
+      content="A platform offering various tools to assist in web application security testing, vulnerability detection, and efficient cybersecurity exploration."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tools.tigabelassec.my.id" />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <meta property="og:site_name" content="13Sec Tools" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="13Sec Tools" />
+    <meta
+      name="twitter:description"
+      content="A platform offering various tools to assist in web application security testing, vulnerability detection, and efficient cybersecurity exploration."
+    />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col font-sans">
+    <main class="flex-grow flex justify-center items-center p-4">
+      <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg">
+        <h2 class="text-white text-2xl font-semibold text-center mb-6">
+          CSRF jQuery File Upload
+        </h2>
+        <form id="targetForm" class="space-y-4">
+          <div id="errorMessage" class="text-red-500 text-sm hidden">
+            Please enter both the target URL and the POST field name.
+          </div>
+          <div>
+            <label for="targetUrl" class="text-white">Target URL:</label>
+            <input
+              type="text"
+              id="targetUrl"
+              name="targetUrl"
+              placeholder="https://example.com/"
+              class="p-3 w-full bg-gray-700 text-white rounded-lg border border-gray-600"
+            />
+          </div>
+          <div>
+            <label for="post-file" class="text-white"
+              >Post File Parameter Name:</label
+            >
+            <input
+              type="text"
+              id="post-file"
+              name="post-file"
+              placeholder="files[]"
+              class="p-3 w-full bg-gray-700 text-white rounded-lg border border-gray-600"
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full py-3 rounded-md bg-teal-600 hover:bg-teal-700 text-white font-semibold"
+          >
+            Lock Target
+          </button>
+        </form>
+
+        <div id="csrfFormWrapper" class="mt-6 hidden">
+          <h2 class="text-white text-xl mb-4">Upload File</h2>
+          <form
+            id="csrfForm"
+            action="#"
+            method="POST"
+            enctype="multipart/form-data"
+            class="space-y-4"
+          >
+            <div>
+              <label for="uploadedFile" class="text-white">Choose File:</label>
+              <input
+                type="file"
+                id="uploadedFile"
+                name="files[]"
+                class="w-full bg-gray-700 text-white rounded-lg border border-gray-600"
+              />
+            </div>
+            <button
+              type="submit"
+              class="w-full py-3 rounded-md bg-teal-600 hover:bg-teal-700 text-white font-semibold"
+            >
+              Upload
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <footer
+      class="bg-gray-900 text-center py-4 text-sm text-gray-500 border-t border-gray-700 mt-6"
+    >
+      © 2025
+      <a href="/" class="text-teal-400 hover:text-teal-500" target="_blank"
+        >13Sec Tools</a
+      >
+      | Crafted with ❤️ for the security community.
+    </footer>
+
+    <div class="fixed top-4 left-4 z-50">
+      <button
+        onclick="history.back()"
+        class="text-teal-400 hover:text-teal-300 text-sm font-medium"
+      >
+        ← Back
+      </button>
+    </div>
+
+    <script>
+      document
+        .getElementById("targetForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          var targetUrl = document.getElementById("targetUrl").value.trim();
+          var postFile = document.getElementById("post-file").value.trim();
+          var errorDiv = document.getElementById("errorMessage");
+
+          if (!targetUrl || !postFile) {
+            errorDiv.innerText =
+              "Please enter both the target URL and the POST field name.";
+            errorDiv.style.display = "block";
+            return;
+          }
+
+          errorDiv.style.display = "none";
+          document.getElementById("csrfForm").action = targetUrl;
+          document.getElementById("uploadedFile").name = postFile;
+          document.getElementById("csrfFormWrapper").style.display = "block";
+        });
+    </script>
+  </body>
+</html>

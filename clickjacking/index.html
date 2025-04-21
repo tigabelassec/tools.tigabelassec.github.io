@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clickjacking Test Tool</title>
+    <meta
+      name="description"
+      content="A platform offering various tools to assist in web application security testing, vulnerability detection, and efficient cybersecurity exploration."
+    />
+    <meta
+      name="keywords"
+      content="web security tools, application security testing, vulnerability detection, ethical hacking, cybersecurity tools, penetration testing, bug bounty toolkit"
+    />
+    <meta name="author" content="13Sec" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="shortcut icon"
+      href="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/favicon.ico"
+      type="image/x-icon"
+    />
+    <meta property="og:title" content="13Sec Tools" />
+    <meta
+      property="og:description"
+      content="A platform offering various tools to assist in web application security testing, vulnerability detection, and efficient cybersecurity exploration."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tools.tigabelassec.my.id" />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <meta property="og:site_name" content="13Sec Tools" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="13Sec Tools" />
+    <meta
+      name="twitter:description"
+      content="A platform offering various tools to assist in web application security testing, vulnerability detection, and efficient cybersecurity exploration."
+    />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col font-sans">
+    <div class="fixed top-4 left-4 z-50">
+      <button
+        onclick="history.back()"
+        class="text-teal-400 hover:text-teal-300 text-sm font-medium"
+      >
+        ← Back
+      </button>
+    </div>
+
+    <header class="bg-gray-900 py-8 text-center mt-14 sm:mt-16 lg:mt-20">
+      <h1 class="text-white text-3xl font-semibold tracking-wide">
+        Clickjacking Test Tool
+      </h1>
+      <div id="errorMessage" class="text-red-500 text-sm mt-4 hidden">
+        Please enter a full URL, e.g., https://example.com
+      </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-6 flex-grow">
+      <div class="flex items-center justify-center gap-4 flex-wrap mb-4">
+        <label for="target" class="text-white text-lg"
+          >Enter Target Domain:</label
+        >
+        <input
+          type="text"
+          id="target"
+          placeholder="https://example.com"
+          class="p-3 text-white bg-gray-700 rounded-lg border border-gray-600 w-72"
+        />
+        <button
+          class="px-5 py-2 rounded-md bg-teal-600 hover:bg-teal-700 text-white font-semibold transition"
+          onclick="loadIframe()"
+        >
+          Test Now
+        </button>
+      </div>
+
+      <div id="iframeContainer" class="mt-8"></div>
+    </div>
+
+    <footer
+      class="bg-gray-900 text-center py-4 text-sm text-gray-500 border-t border-gray-700 mt-6"
+    >
+      © 2025
+      <a href="/" class="text-teal-400 hover:text-teal-500" target="_blank"
+        >13Sec Tools</a
+      >
+      | Crafted with ❤️ for the security community.
+    </footer>
+
+    <script>
+      function loadIframe() {
+        const url = document.getElementById("target").value.trim();
+        const container = document.getElementById("iframeContainer");
+        const errorMessage = document.getElementById("errorMessage");
+
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+          errorMessage.style.display = "block";
+          return;
+        } else {
+          errorMessage.style.display = "none";
+        }
+
+        container.innerHTML = `
+          <iframe src="${url}" width="100%" height="500" class="border-2 border-gray-600" 
+          onerror="alert('Failed to load. X-Frame protection may be active.')">
+          </iframe>
+        `;
+      }
+    </script>
+  </body>
+</html>
