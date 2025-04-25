@@ -708,7 +708,7 @@ concat(@:=0,(select count(*)from information_schema.columns where@:=concat(@,'<b
 
         navigator.clipboard.writeText(textToCopy).then(() => {
           const copyMessage = document.getElementById(
-            `copyMessage${id.charAt(id.length - 1)}`
+            "copyMessage" + id.replace("dios", "")
           );
           copyMessage.classList.remove("hidden");
           setTimeout(() => {
