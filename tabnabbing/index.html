@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Test website security for tabnabbing vulnerabilities."
+    />
+    <meta
+      name="keywords"
+      content="tabnabbing, security testing, website vulnerabilities, phishing protection"
+    />
+    <meta name="author" content="13Sec" />
+    <meta name="robots" content="index, follow" />
+    <title>13Sec Tools | Tabnabbing Vulnerability Test</title>
+    <link
+      rel="icon"
+      href="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/favicon.ico"
+      type="image/x-icon"
+    />
+    <link rel="canonical" href="https://tools.tigabelassec.my.id/tabnabbing/" />
+    <meta
+      property="og:title"
+      content="13Sec Tools | Tabnabbing Vulnerability Test"
+    />
+    <meta
+      property="og:description"
+      content="Test website security for tabnabbing vulnerabilities. Learn about phishing and tabnabbing attacks."
+    />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <meta
+      property="og:url"
+      content="https://tools.tigabelassec.my.id/tabnabbing/"
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="13Sec Tools | Tabnabbing Vulnerability Test"
+    />
+    <meta
+      name="twitter:description"
+      content="Test website security for tabnabbing vulnerabilities. Learn about phishing and tabnabbing attacks."
+    />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <meta
+      name="twitter:url"
+      content="https://tools.tigabelassec.my.id/tabnabbing/"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .copy-tooltip {
+        transition: opacity 0.3s ease;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gray-900 text-white min-h-screen flex flex-col justify-between"
+  >
+    <div class="fixed top-4 left-4 z-50">
+      <button
+        onclick="history.back()"
+        class="inline-flex items-center text-sm font-medium text-teal-400 hover:text-teal-300 transition"
+      >
+        ← Back
+      </button>
+    </div>
+    <main class="flex-grow flex flex-col items-center px-4 pt-16 pb-8">
+      <div
+        class="max-w-2xl w-full bg-gray-800 rounded-2xl shadow-lg p-8 text-center space-y-8"
+      >
+        <h1 class="text-3xl font-bold text-white">
+          Tabnabbing Vulnerability Test
+        </h1>
+
+        <div
+          class="bg-gray-700/50 text-gray-300 border border-gray-600 p-6 rounded-lg space-y-6 text-left"
+        >
+          <h2 class="text-2xl font-semibold text-teal-400">How to Use</h2>
+          <ol class="list-decimal list-inside space-y-2 text-gray-300">
+            <li>
+              From the target website, create a link pointing to
+              <code
+                class="bg-gray-700 px-1 py-0.5 rounded break-all whitespace-pre-wrap"
+                >https://tools.tigabelassec.my.id/tabnabbing/tabnabbing.html</code
+              >
+              with
+              <code class="bg-gray-700 px-1 py-0.5 rounded"
+                >target="_blank"</code
+              >
+              attribute.
+            </li>
+            <li>
+              Click on the link. Observe whether the page that opened the link
+              is replaced by this page.
+            </li>
+            <li>
+              If it is replaced, the website is
+              <span class="text-red-400 font-bold">vulnerable</span> to
+              tabnabbing.
+            </li>
+            <li>
+              Ensure that all external links use
+              <code class="bg-gray-700 px-1 py-0.5 rounded"
+                >rel="noopener noreferrer"</code
+              >
+              to prevent this vulnerability.
+            </li>
+          </ol>
+
+          <div class="space-y-6 mt-8">
+            <div>
+              <h3 class="text-xl font-semibold text-teal-300">
+                Example Vulnerable Link
+              </h3>
+              <p class="text-gray-400 text-sm mb-2">
+                This example shows a vulnerable link without proper security
+                attributes:
+              </p>
+              <div class="relative">
+                <pre
+                  id="code1"
+                  class="bg-gray-800 p-4 rounded-lg text-sm overflow-x-auto text-gray-300 border border-gray-700"
+                >
+&lt;a href="https://tools.tigabelassec.my.id/tabnabbing/tabnabbing.html" target="_blank"&gt;Test Tabnabbing&lt;/a&gt;
+                </pre>
+                <button
+                  onclick="copyToClipboard('code1')"
+                  class="absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white text-xs px-3 py-1 rounded-md"
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-xl font-semibold text-teal-300">
+                Example Safe Link
+              </h3>
+              <p class="text-gray-400 text-sm mb-2">
+                This example shows a safe link using
+                <code class="bg-gray-700 px-1 py-0.5 rounded"
+                  >rel="noopener noreferrer"</code
+                >:
+              </p>
+              <div class="relative">
+                <pre
+                  id="code2"
+                  class="bg-gray-800 p-4 rounded-lg text-sm overflow-x-auto text-gray-300 border border-gray-700"
+                >
+&lt;a href="https://tools.tigabelassec.my.id/tabnabbing/tabnabbing.html" target="_blank" rel="noopener noreferrer"&gt;Test Tabnabbing&lt;/a&gt;
+                </pre>
+                <button
+                  onclick="copyToClipboard('code2')"
+                  class="absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white text-xs px-3 py-1 rounded-md"
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer
+      class="bg-gray-900 text-center text-sm text-gray-500 py-4 mt-20 mb-0 border-t border-gray-700"
+    >
+      <p>
+        © 2025
+        <a href="/" class="text-teal-400 hover:text-teal-500">13Sec Tools</a> |
+        Crafted with ❤️ for the security community.
+      </p>
+    </footer>
+
+    <script>
+      function copyToClipboard(id) {
+        const code = document.getElementById(id).innerText.trim();
+        navigator.clipboard.writeText(code).then(() => {
+          const button = document.querySelector(`#${id} + button`);
+          const original = button.innerText;
+          button.innerText = "Copied!";
+          setTimeout(() => (button.innerText = original), 1500);
+        });
+      }
+    </script>
+  </body>
+</html>
