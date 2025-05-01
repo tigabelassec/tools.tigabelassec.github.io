@@ -78,10 +78,17 @@
 
         <div id="messageBox" class="mt-4 text-sm font-medium hidden"></div>
 
-        <iframe
+        <pre
           id="corsResult"
-          class="w-full h-64 mt-6 rounded-md bg-[#2c3e50] hidden"
-        ></iframe>
+          class="hidden bg-black text-white p-2 rounded"
+          style="
+            max-height: 400px;
+            overflow-y: auto;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+          "
+        ></pre>
 
         <button
           id="copyBtn"
@@ -102,99 +109,6 @@
       >
       | Crafted with ❤️ for the security community.
     </footer>
-
-    <script>
-      function isValidURL(string) {
-        try {
-          new URL(string);
-          return true;
-        } catch (_) {
-          return false;
-        }
-      }
-
-      function submit() {
-        const url = document.getElementsByName("target")[0].value.trim();
-        const iframe = document.getElementById("corsResult");
-        const copyBtn = document.getElementById("copyBtn");
-        const msgBox = document.getElementById("messageBox");
-
-        iframe.classList.add("hidden");
-        copyBtn.classList.add("hidden");
-        msgBox.classList.add("hidden");
-        msgBox.textContent = "";
-        msgBox.className = "mt-4 text-sm font-medium hidden";
-
-        if (!url) {
-          showMessage(
-            "Please enter a target URL, e.g., https://example.com/path/path",
-            "red"
-          );
-          return;
-        }
-
-        if (!isValidURL(url)) {
-          showMessage("Invalid URL format.", "red");
-          return;
-        }
-
-        const xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-          if (this.readyState === 4) {
-            iframe.classList.remove("hidden");
-            iframe.srcdoc =
-              this.status === 200
-                ? "<pre style='color: white;'>Response (Status: <b style='color: #4ade80;'>VULN</b> | status code: <span style='color: #4ade80;'>" +
-                  this.status +
-                  "</span>):<br><br>" +
-                  this.responseText +
-                  "</pre>"
-                : "<pre style='color: white;'>Response (Status: <b style='color: #f87171;'>Not Vulnerable</b> | status code: <span style='color: #f87171;'>" +
-                  this.status +
-                  "</span>):<br><br>" +
-                  this.responseText +
-                  "</pre>";
-
-            copyBtn.classList.remove("hidden");
-
-            if (this.status === 200) {
-              showMessage("CORS vulnerability detected on: " + url, "green");
-            } else {
-              showMessage("CORS test failed or not vulnerable: " + url, "red");
-            }
-          }
-        };
-        xhttp.open("GET", url, true);
-        xhttp.withCredentials = true;
-        xhttp.send();
-      }
-
-      function showMessage(msg, color) {
-        const box = document.getElementById("messageBox");
-        box.textContent = msg;
-        box.classList.remove("hidden");
-
-        if (color === "green") {
-          box.classList.add("text-green-400");
-        } else {
-          box.classList.add("text-red-400");
-        }
-      }
-
-      function copyResult() {
-        const iframe = document.getElementById("corsResult");
-        const content = iframe.contentWindow.document.body.innerText;
-        const msgBox = document.getElementById("messageBox");
-
-        navigator.clipboard.writeText(content).then(
-          () => {
-            showMessage("Result copied to clipboard!", "green");
-          },
-          () => {
-            showMessage("Failed to copy result.", "red");
-          }
-        );
-      }
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>

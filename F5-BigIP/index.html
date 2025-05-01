@@ -22,7 +22,7 @@
     <link rel="canonical" href="https://tools.tigabelassec.my.id/F5-BigIP/" />
     <meta
       property="og:title"
-      content="13Sec Tools | F% Big-IP Cookie Encoder & Decoder"
+      content="13Sec Tools | F5 Big-IP Cookie Encoder & Decoder"
     />
     <meta
       property="og:description"
@@ -86,15 +86,16 @@
               class="inline"
             />
           </h1>
+
           <label for="inputText" class="font-semibold block mb-2">
-            Enter Cookie or IP:Port
+            Enter Cookie(s) or IP:Port(s) (one per line)
           </label>
-          <input
-            type="text"
+          <textarea
             id="inputText"
             placeholder="Example: BIGipServerPOOL=12345678.5678.0000 or 192.168.1.1:443"
+            rows="6"
             class="p-3 mb-4 w-full rounded bg-gray-700 border border-gray-600 text-white"
-          />
+          ></textarea>
 
           <label for="poolName" class="font-semibold block mb-2">
             Pool Name (Encode):
@@ -113,9 +114,20 @@
             🔍 Auto Detect & Process
           </button>
 
+          <label for="fileUpload" class="font-semibold block mt-4"
+            >Upload File (Text format)</label
+          >
+          <input
+            type="file"
+            id="fileUpload"
+            accept=".txt"
+            class="p-3 mb-4 w-full rounded bg-gray-700 border border-gray-600 text-white"
+            onchange="handleFileUpload(event)"
+          />
+
           <div
             id="result"
-            class="mt-4 bg-gray-900 p-4 rounded font-mono break-words hidden"
+            class="mt-4 bg-gray-900 p-4 rounded font-mono break-words hidden overflow-y-auto max-h-96 md:max-h-[600px]"
           >
             <div id="outputText"></div>
             <button
@@ -128,6 +140,13 @@
               ✅ Copied to clipboard!
             </div>
           </div>
+          <button
+            id="downloadBtn"
+            class="p-3 bg-teal-600 hover:bg-teal-700 text-white w-full rounded hidden"
+            onclick="downloadResult()"
+          >
+            Download Result
+          </button>
         </div>
       </div>
     </div>
@@ -141,106 +160,6 @@
       >
       | Crafted with ❤️ for the security community.
     </footer>
-
-    <script>
-      function autoDetect() {
-        const input = document.getElementById("inputText").value.trim();
-        const pool = document.getElementById("poolName").value.trim();
-        const resultDiv = document.getElementById("result");
-        const outputDiv = document.getElementById("outputText");
-
-        if (!input) {
-          outputDiv.innerHTML = "❌ Input is empty.";
-          resultDiv.classList.remove("hidden");
-          return;
-        }
-
-        if (input.includes("=") && input.includes(".")) {
-          if (pool) {
-            outputDiv.innerHTML =
-              "❌ Please remove the Pool Name input for decoding.";
-          } else {
-            const decoded = decodeCookie(input);
-            outputDiv.innerHTML = decoded;
-          }
-        } else if (input.includes(":")) {
-          if (!pool) {
-            outputDiv.innerHTML = "❌ Please enter Pool Name for encoding.";
-          } else {
-            const encoded = encodeCookie(input, pool);
-            outputDiv.innerHTML = encoded;
-          }
-        } else {
-          outputDiv.innerHTML =
-            "❌ Unrecognized format. Use IP:Port or Cookie.";
-        }
-
-        resultDiv.classList.remove("hidden");
-      }
-
-      function encodeCookie(ipPort, pool) {
-        try {
-          const [ip, portStr] = ipPort.split(":");
-          const port = parseInt(portStr);
-          const ipParts = ip.split(".").map(Number);
-          if (ipParts.length !== 4 || ipParts.some((x) => x < 0 || x > 255)) {
-            return "❌ Invalid IP address.";
-          }
-
-          const ipBuffer = new Uint8Array(ipParts).buffer;
-          const ipUint32 = new Uint32Array(ipBuffer)[0];
-
-          const portBuffer = new Uint16Array([port]).buffer;
-          const portUint16 = new Uint16Array(portBuffer)[0];
-
-          const cookie = `BIGipServer${pool}=${ipUint32}.${portUint16}.0000`;
-          return `✅ Encoded Cookie:<br><code>${cookie}</code>`;
-        } catch (e) {
-          return "❌ Failed to encode.";
-        }
-      }
-
-      function decodeCookie(cookieStr) {
-        try {
-          const [name, value] = cookieStr.split("=");
-          const [host, port] = value.split(".");
-          const poolMatch = /^BIGipServer([.\w]*)/.exec(name);
-          const ipBytes = new Uint8Array(
-            new Uint32Array([parseInt(host)]).buffer
-          );
-          const ip = Array.from(ipBytes).join(".");
-
-          const portBytes = new Uint8Array(
-            new Uint16Array([parseInt(port)]).buffer
-          );
-          const portHex =
-            "0x" +
-            portBytes[0].toString(16).padStart(2, "0") +
-            portBytes[1].toString(16).padStart(2, "0");
-          const decodedPort = parseInt(portHex, 16);
-
-          return `✅ Pool: <b>${
-            poolMatch ? poolMatch[1] : "N/A"
-          }</b><br>IP: <b>${ip}</b><br>Port: <b>${decodedPort}</b>`;
-        } catch (e) {
-          return "❌ Failed to decode.";
-        }
-      }
-
-      function copyResult() {
-        const text = document.getElementById("outputText").innerText;
-        navigator.clipboard.writeText(text).then(() => {
-          showMessage();
-        });
-      }
-
-      function showMessage() {
-        const msg = document.getElementById("copyMessage");
-        msg.classList.remove("hidden");
-        setTimeout(() => {
-          msg.classList.add("hidden");
-        }, 2500);
-      }
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
