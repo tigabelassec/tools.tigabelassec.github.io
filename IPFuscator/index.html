@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>13Sec Tools | IP Obfuscator & Deobfuscator</title>
+    <meta
+      name="description"
+      content="Convert and revert IPs between obfuscated formats."
+    />
+    <meta
+      name="keywords"
+      content="IP obfuscation, IP deobfuscation, IP converter, IP encoder, IP decoder, IP hexadecimal, IP decimal, IP octal, cybersecurity tools, penetration testing, ethical hacking, network analysis, bug bounty, IP evasion, red teaming"
+    />
+    <meta name="author" content="13Sec" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="shortcut icon"
+      href="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/favicon.ico"
+      type="image/x-icon"
+    />
+    <link rel="canonical" href="https://tools.tigabelassec.my.id/IPFuscator/" />
+    <meta
+      property="og:title"
+      content="13Sec Tools | IP Obfuscator & Deobfuscator"
+    />
+    <meta
+      property="og:description"
+      content="Convert and revert IPs between obfuscated formats."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://tools.tigabelassec.my.id/IPFuscator/"
+    />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <meta property="og:site_name" content="13Sec Tools" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="13Sec Tools | IP Obfuscator & Deobfuscator"
+    />
+    <meta
+      name="twitter:description"
+      content="Convert and revert IPs between obfuscated formats."
+    />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <meta
+      name="twitter:url"
+      content="https://tools.tigabelassec.my.id/IPFuscator/"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen flex flex-col font-sans bg-gray-900 text-white">
+    <div class="fixed top-4 left-4 z-50">
+      <button
+        onclick="history.back()"
+        class="text-teal-400 hover:text-teal-300 text-sm font-medium"
+      >
+        &larr; Back
+      </button>
+    </div>
+
+    <main class="flex-grow flex justify-center items-start pt-24 px-4 pb-20">
+      <div
+        class="w-full max-w-4xl bg-gray-800 border border-gray-700 p-6 rounded-lg"
+      >
+        <h1 class="text-3xl font-bold text-center mb-6">
+          IP Obfuscator & Deobfuscator
+        </h1>
+
+        <div
+          class="flex space-x-6 justify-center border-b border-gray-700 mb-6"
+        >
+          <button
+            onclick="showTab('obfuscator')"
+            id="tab-obfuscator"
+            class="py-2 text-sm font-medium text-teal-400 border-b-2 border-teal-400"
+          >
+            🛠 IP Obfuscator
+          </button>
+          <button
+            onclick="showTab('deobfuscator')"
+            id="tab-deobfuscator"
+            class="py-2 text-sm font-medium text-gray-400 hover:text-teal-300"
+          >
+            🔎 IP Deobfuscator
+          </button>
+        </div>
+
+        <div id="obfuscator" class="tab-content">
+          <label for="ipInput" class="font-semibold block mb-2"
+            >Enter IP Address:</label
+          >
+          <input
+            type="text"
+            id="ipInput"
+            placeholder="Example: 127.0.0.1"
+            class="p-3 mb-4 w-full rounded bg-gray-700 border border-gray-600 text-white"
+          />
+          <button
+            onclick="calculateIPFuscation()"
+            class="p-3 bg-teal-600 hover:bg-teal-700 text-white w-full rounded"
+          >
+            🔍 IPFuscate!
+          </button>
+          <div
+            id="outputDiv"
+            class="mt-6 bg-gray-900 p-4 rounded font-mono break-words hidden overflow-y-auto max-h-96 border border-gray-700"
+          ></div>
+        </div>
+
+        <div id="deobfuscator" class="tab-content hidden">
+          <label for="obfInput" class="font-semibold block mb-2"
+            >Enter Obfuscated IP (Decimal, Hex, Octal):</label
+          >
+          <input
+            type="text"
+            id="obfInput"
+            placeholder="Example: 2130706433 or 0x7f000001"
+            class="p-3 mb-4 w-full rounded bg-gray-700 border border-gray-600 text-white"
+          />
+          <button
+            onclick="deobfuscateIP()"
+            class="p-3 bg-teal-600 hover:bg-teal-700 text-white w-full rounded"
+          >
+            🧩 Deobfuscate!
+          </button>
+          <div
+            id="deobfResult"
+            class="mt-6 bg-gray-900 p-4 rounded font-mono break-words hidden overflow-y-auto max-h-96 border border-gray-700"
+          ></div>
+        </div>
+      </div>
+    </main>
+
+    <footer
+      class="w-full text-center text-sm text-gray-500 py-4 border-t border-gray-700"
+    >
+      &copy; 2025
+      <a href="/" class="text-teal-400 hover:text-teal-500" target="_blank"
+        >13Sec Tools</a
+      >
+      | Crafted with ❤️ for the security community.
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
