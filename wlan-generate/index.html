@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FH WiFi Passkey Generator</title>
+    <meta
+      name="description"
+      content="Generate your FH WLAN passkey quickly and easily."
+    />
+    <meta
+      name="keywords"
+      content="FH WLAN, WLAN generator, passkey, network, WiFi, FiberHome"
+    />
+    <meta name="author" content="13Sec" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="shortcut icon"
+      href="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/favicon.ico"
+      type="image/x-icon"
+    />
+    <link
+      rel="canonical"
+      href="https://tools.tigabelassec.my.id/wlan-generator/"
+    />
+    <meta property="og:title" content="FH Passkey Generator" />
+    <meta
+      property="og:description"
+      content="Generate your FH WLAN passkey quickly and easily."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://tools.tigabelassec.my.id/wlan-generator/"
+    />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <meta property="og:site_name" content="FH Tools" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="FH Passkey Generator" />
+    <meta
+      name="twitter:image"
+      content="https://raw.githubusercontent.com/tigabelassec/tigabelassec.github.io/refs/heads/main/assets/img/favicons/avatar.png"
+    />
+    <meta
+      name="twitter:description"
+      content="Generate your FH WLAN passkey quickly and easily."
+    />
+    <meta
+      name="twitter:url"
+      content="https://tools.tigabelassec.my.id/wlan-generator/"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Poppins", "sans-serif"],
+            },
+            colors: {
+              "teal-400": "#2dd4bf",
+              "teal-300": "#5eead4",
+              "teal-600": "#0d9488",
+              "teal-700": "#0f766e",
+            },
+          },
+        },
+      };
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body class="min-h-screen flex flex-col font-sans bg-gray-900 text-white">
+    <div class="fixed top-4 left-4 z-50">
+      <button
+        onclick="history.back()"
+        class="text-teal-400 hover:text-teal-300 text-sm font-medium"
+      >
+        &larr; Back
+      </button>
+    </div>
+    <main class="flex-grow flex justify-center items-start pt-24 px-4 pb-12">
+      <div
+        class="w-full max-w-md bg-gray-800 border border-gray-700 p-6 rounded-lg shadow-lg"
+      >
+        <h1 class="text-2xl font-bold text-center mb-2">
+          <i class="fas fa-wifi text-gray-400 mr-2"></i>
+          <span class="text-teal-400">FH</span>
+          <span class="text-white">WiFi Passkey Generator</span>
+        </h1>
+
+        <p class="text-sm text-center text-gray-400 mb-6">
+          Enter your FiberHome WLAN SSID to get the passkey
+        </p>
+
+        <div class="input-group mb-5">
+          <label
+            for="inputField"
+            class="font-semibold block mb-2 text-gray-400"
+          >
+            <i class="fas fa-network-wired mr-2"></i>SSID NAME:
+          </label>
+          <input
+            type="text"
+            id="inputField"
+            placeholder="e.g. fh_XxXxXx or fh_XxXxXx_5G"
+            class="p-3 w-full rounded bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-teal-400"
+          />
+        </div>
+
+        <button
+          id="generateBtn"
+          class="p-3 bg-teal-600 hover:bg-teal-700 text-white w-full rounded font-semibold transition duration-200 ease-in-out transform hover:-translate-y-0.5 active:translate-y-0 mb-6"
+        >
+          <i class="fas fa-key mr-2"></i> Get Passkey
+        </button>
+
+        <div
+          id="output"
+          class="text-center p-4 rounded font-semibold text-white bg-gray-900 border border-gray-700 break-words overflow-y-auto max-h-48 mb-3"
+        >
+          Output will appear here.
+        </div>
+
+        <button
+          id="copyBtn"
+          class="hidden p-3 border border-teal-600 text-teal-400 hover:bg-teal-600 hover:text-white w-full rounded font-semibold transition duration-200 ease-in-out transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <i class="far fa-copy mr-2"></i> Copy
+        </button>
+      </div>
+    </main>
+
+    <footer
+      class="w-full text-center text-sm text-gray-500 py-4 border-t border-gray-700"
+    >
+      &copy; 2025
+      <a href="/" class="text-teal-400 hover:text-teal-500" target="_blank"
+        >13Sec Tools</a
+      >
+      | Crafted with ❤️ for the security community.
+    </footer>
+
+    <script>
+      const pairs = [
+        ["a", "5"],
+        ["b", "4"],
+        ["c", "3"],
+        ["d", "2"],
+        ["e", "1"],
+        ["f", "0"],
+        ["6", "9"],
+        ["7", "8"],
+      ];
+
+      const map = {};
+
+      for (const [k, v] of pairs) {
+        map[k] = v;
+        map[v] = k;
+      }
+
+      function generateSSID(input) {
+        if (!input.startsWith("fh_")) return "";
+        const parts = input.split("_");
+        if (parts.length < 2) return "";
+        const middle = parts[1];
+        return (
+          "wlan" + [...middle].map((c) => map[c.toLowerCase()] ?? c).join("")
+        );
+      }
+
+      const inputField = document.getElementById("inputField");
+      const output = document.getElementById("output");
+      const generateBtn = document.getElementById("generateBtn");
+      const copyBtn = document.getElementById("copyBtn");
+
+      output.textContent = "Output will appear here.";
+
+      document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
+
+      generateBtn.addEventListener("click", () => {
+        const val = inputField.value.trim();
+        const result = generateSSID(val);
+
+        output.textContent =
+          result || "Invalid input format. Please try again.";
+
+        if (result) {
+          output.classList.remove("bg-red-800", "border-red-700");
+          output.classList.add("bg-gray-900", "border-gray-700");
+          output.style.color = "white";
+          copyBtn.classList.remove("hidden");
+          copyBtn.disabled = false;
+        } else {
+          output.classList.remove("bg-gray-900", "border-gray-700");
+          output.classList.add("bg-red-800", "border-red-700");
+          output.style.color = "white";
+          copyBtn.classList.add("hidden");
+          copyBtn.disabled = true;
+        }
+      });
+
+      copyBtn.addEventListener("click", async () => {
+        const text = output.textContent;
+        try {
+          await navigator.clipboard.writeText(text);
+          copyBtn.textContent = "Copied!";
+          setTimeout(() => {
+            copyBtn.innerHTML = '<i class="far fa-copy mr-2"></i> Copy';
+          }, 1500);
+        } catch (err) {
+          copyBtn.textContent = "Copy Failed";
+          setTimeout(() => {
+            copyBtn.innerHTML = '<i class="far fa-copy mr-2"></i> Copy';
+          }, 1500);
+        }
+      });
+    </script>
+  </body>
+</html>
